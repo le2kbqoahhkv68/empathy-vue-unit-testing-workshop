@@ -1,5 +1,5 @@
 import {mount, Wrapper, WrapperArray} from "@vue/test-utils";
-import Dropdown from "@/components/Dropdown.vue";
+import Dropdown from "@/components/dropdown.vue";
 import Vue from 'vue';
 
 describe('Dropdown component tests', () => {

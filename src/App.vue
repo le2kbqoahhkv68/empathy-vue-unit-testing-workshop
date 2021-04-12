@@ -1,6 +1,7 @@
 <template>
   <div id='app'>
     Dropdown
+    <div class="x-options">{{ options.join() }}</div>
     <Dropdown
       :options="options"
       v-model="selected"
@@ -10,8 +11,8 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
-import Dropdown from '@/components/Dropdown.vue'
-import { AxiosResponse } from 'axios'
+import Dropdown from '@/components/dropdown.vue'
+import axios, { AxiosResponse } from 'axios'
 
 @Component({
   components: { Dropdown }
@@ -21,7 +22,13 @@ export default class App extends Vue {
   selected: string | null = null;
 
   mounted (): void {
-    this.$http.get('http://localhost:3001/options')
+    /*
+      this.$http.get('http://localhost:3001/options')
+      .then(({ data: options }: AxiosResponse) => {
+        this.options = options
+      })
+    */
+    axios.get('http://localhost:3001/options')
       .then(({ data: options }: AxiosResponse) => {
         this.options = options
       })

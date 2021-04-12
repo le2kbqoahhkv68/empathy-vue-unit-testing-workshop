@@ -1,22 +1,32 @@
 <template>
-  <div id="app">
-    <ul>
-      <li>we
-        </li>
-    </ul>
-
-    <h2>todo</h2>
-    - componente lista, con ul y lis
-    - componente item para dentro de los li
-    - el componente item al hacer click
+  <div id='app'>
+    Dropdown
+    <Dropdown
+      :options="options"
+      v-model="selected"
+    />
   </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
+import Dropdown from '@/components/Dropdown.vue'
+import { AxiosResponse } from 'axios'
 
-@Component
-export default class App extends Vue {}
+@Component({
+  components: { Dropdown }
+})
+export default class App extends Vue {
+  options: string[] = []
+  selected: string | null = null;
+
+  mounted (): void {
+    this.$http.get('http://localhost:3001/options')
+      .then(({ data: options }: AxiosResponse) => {
+        this.options = options
+      })
+  }
+}
 </script>
 
 <style>

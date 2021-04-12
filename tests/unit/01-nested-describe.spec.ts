@@ -5,31 +5,31 @@ describe('outer', () => {
     console.log('describe inner 1');
     beforeEach(() => {
       console.log('before each inner 1');
-    });
+    })
     test('test 1', () => {
       console.log('test for describe inner 1');
       const a = 'hello';
-      expect(true).toEqual(true);
-    });
-  });
+      expect(true).toEqual(true)
+    })
+  })
 
   console.log('describe outer-b');
 
   test('test 1', () => {
     console.log('test for describe outer');
-    expect(true).toEqual(true);
-  });
+    expect(true).toEqual(true)
+  })
 
   describe('describe inner 2', () => {
     console.log('describe inner 2');
     test('test for describe inner 2', () => {
       console.log('test for describe inner 2');
-      expect(false).toEqual(false);
-    });
-  });
+      expect(false).toEqual(false)
+    })
+  })
 
   console.log('describe outer-c');
-});
+})
 
 // describe outer-a
 // describe inner 1

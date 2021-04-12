@@ -1,22 +1,21 @@
-import {createLocalVue, mount, shallowMount} from "@vue/test-utils";
+import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
 import { CreateElement, RenderContext } from "vue";
 import { DefaultProps } from "vue/types/options";
-import Vue from 'vue';
 
 describe('mount examples', () => {
   test('attachTo', () => {
     const TestComponent = {
-      template: `<div>hello</div>`
+      template: "<div>hello</div>"
     }
 
     const wrapper = mount(TestComponent, {
-      attachTo: document.body,
+      attachTo: document.body
     })
 
-    expect(wrapper.vm.$el.parentNode).toBe(document.body);
+    expect(wrapper.vm.$el.parentNode).toBe(document.body)
 
-    // important to call, to destroy the rendered elements
-    wrapper.destroy();
+    // important to ex, to destroy the rendered elements
+    wrapper.destroy()
   })
 
   test('context', () => {
@@ -29,7 +28,7 @@ describe('mount examples', () => {
         }
       },
       render: (createElement: CreateElement, context: RenderContext<DefaultProps>) => {
-        return createElement('div', `My name is ${context.props.name}`);
+        return createElement('div', `My name is ${context.props.name}`)
       }
     }
 
@@ -46,10 +45,10 @@ describe('mount examples', () => {
 
   test('localVue', () => {
     const TestComponent = {
-      template: `<div>hello</div>`
+      template: "<div>hello</div>"
     }
 
-    const localVue = createLocalVue();
+    const localVue = createLocalVue()
 
     // localVue.use(plugin)
 
@@ -59,13 +58,13 @@ describe('mount examples', () => {
 
     // const wrapper = mount(TestComponent) - It won't work!
 
-    expect(wrapper.vm).toBeInstanceOf(localVue);
+    expect(wrapper.vm).toBeInstanceOf(localVue)
   })
 
   describe('mocks', () => {
     const TestComponent = {
       template: '<div>Total: {{ getTotal(amount, price) }} €</div>',
-      data: function() {
+      data: function () {
         return {
           amount: 3,
           price: 10
@@ -76,8 +75,8 @@ describe('mount examples', () => {
     test('returns Total: 30 €', () => {
       const wrapper = mount(TestComponent, {
         mocks: {
-          getTotal(amount: number, price: number): number {
-            return amount * price;
+          getTotal (amount: number, price: number): number {
+            return amount * price
           }
         }
       })
@@ -87,8 +86,8 @@ describe('mount examples', () => {
     test('returns Total: 30 € + with tax', () => {
       const wrapper = mount(TestComponent, {
         mocks: {
-          getTotal(amount: number, price: number): number {
-            return amount * price * 1.21;
+          getTotal (amount: number, price: number): number {
+            return amount * price * 1.21
           }
         }
       })
@@ -103,7 +102,7 @@ describe('mount examples', () => {
 
     const TestComponent = {
       // not using template literals just for this example
-      data: function() {
+      data: function () {
         return {
           defaultTitle: "EmpathyX"
         }
@@ -148,13 +147,13 @@ describe('mount examples', () => {
       template: '<span>child</span>'
     }
 
-    test('child component', ()=> {
+    test('child component', () => {
       const ParentComponent = {
         components: { ChildComponent },
         template: '<div>parent: <ChildComponent /></div>'
       }
 
-      const wrapper = mount(ParentComponent);
+      const wrapper = mount(ParentComponent)
 
       expect(wrapper.text()).toBe('parent: child')
     })
@@ -198,7 +197,7 @@ describe('mount examples', () => {
         }
       })
 
-      expect(wrapper.findComponent({ref: 'child'}).exists()).toBe(true);
+      expect(wrapper.findComponent({ ref: 'child'}).exists()).toBe(true)
       expect(wrapper.text()).toBe('parent:');
     })
 
@@ -207,9 +206,9 @@ describe('mount examples', () => {
         template: '<div>parent: <ChildComponent ref="child" /></div>'
       }
 
-      const wrapper = shallowMount(ParentComponent);
+      const wrapper = shallowMount(ParentComponent)
 
-      expect(wrapper.findComponent({ref: 'child'}).exists()).toBe(true);
+      expect(wrapper.findComponent({ ref: 'child'}).exists()).toBe(true)
       expect(wrapper.text()).toBe('parent:');
     })
   })
@@ -225,7 +224,7 @@ describe('mount examples', () => {
     }
 
     it('should render Monday', () => {
-      const wrapper = mount(TestComponent);
+      const wrapper = mount(TestComponent)
       expect(wrapper.text()).toBe('Today is Monday!');
     })
 
@@ -242,7 +241,7 @@ describe('mount examples', () => {
 
   describe('data', () => {
     const TestComponent = {
-      data() {
+      data () {
         return {
           today: 'Monday'
         }
@@ -251,13 +250,13 @@ describe('mount examples', () => {
     }
 
     it('should render Monday', () => {
-      const wrapper = mount(TestComponent);
+      const wrapper = mount(TestComponent)
       expect(wrapper.text()).toBe('Today is Monday!');
     })
 
     it('should render Tuesday', () => {
       const wrapper = mount(TestComponent, {
-        data() {
+        data () {
           return {
             today: "Tuesday"
           }
@@ -267,4 +266,4 @@ describe('mount examples', () => {
       expect(wrapper.text()).toBe('Today is Tuesday!');
     })
   })
-});
+})

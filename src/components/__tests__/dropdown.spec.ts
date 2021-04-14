@@ -8,7 +8,7 @@ describe('Dropdown component tests', () => {
    selected
   }: {
     options?: string[],
-    selected: string
+    selected?: string
   }): {
     wrapper: Wrapper<Vue>,
     selectedWrapper: Wrapper<Vue>,
@@ -31,7 +31,8 @@ describe('Dropdown component tests', () => {
         return options;
       },
       async clickItem(index: number): Promise<void> {
-        wrapper.findAll('x-dropdown__item').at(index).trigger('click');
+
+        wrapper.findAll('.x-dropdown__item').at(index).trigger('click');
         return Vue.nextTick();
       }
     }
@@ -58,7 +59,7 @@ describe('Dropdown component tests', () => {
     expect(wrapper.find('ul > li.x-dropdown__item').exists()).toBe(true);
   })
 
-  it('should render options provided as prop with none selected', () => {
+  it('should render options provided as prop', () => {
     const optionsStub = ['a', 'b', 'c'];
 
     const wrapper = mount(Dropdown, {
@@ -77,7 +78,7 @@ describe('Dropdown component tests', () => {
     expect(wrapper.find('.x-dropdown__item--selected').exists()).toBe(false);
   })
 
-  it('should add selected class to the selected element', () => {
+  it('should add selected class to the selected element passed as prop', () => {
     const optionsStub = ['a', 'b', 'c'];
     const optionIdx = 1;
 
@@ -91,20 +92,23 @@ describe('Dropdown component tests', () => {
     expect(wrapper.find('.x-dropdown__item--selected').exists()).toBe(true);
   })
 
-  it('emits "select" event with an option as the value on item click', ()=> {
+  it('emits "select" event with an option as the value on item click', async ()=> {
     const optionsStub = ['a', 'b', 'c'];
 
-    const wrapper = mount(Dropdown, {
+    /*const wrapper = mount(Dropdown, {
       propsData: {
         options: optionsStub
       }
-    })
+    })*/
+
+    const { wrapper, clickItem } = createDropdownWrapper({ options: optionsStub })
 
     const optionIdx = 1;
     const itemWrapper = wrapper.findAll('.x-dropdown__item').at(optionIdx);
 
 
-    itemWrapper.trigger('click');
+    //itemWrapper.trigger('click');
+    await clickItem(1);
     // notice the array and notice equal
     expect(wrapper.emitted('select')?.[0]).toEqual([optionsStub[optionIdx]]);
   })

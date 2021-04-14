@@ -3,6 +3,14 @@ import { CreateElement, RenderContext } from "vue";
 import { DefaultProps } from "vue/types/options";
 
 describe('mount examples', () => {
+  test('hello world', () => {
+    const wrapper = mount({
+      template: `<div>hello world</div>`,
+    })
+
+    expect(wrapper.text()).toBe('hello world')
+  })
+
   test('attachTo', () => {
     const TestComponent = {
       template: "<div>hello</div>"
@@ -13,9 +21,6 @@ describe('mount examples', () => {
     })
 
     expect(wrapper.vm.$el.parentNode).toBe(document.body)
-
-    // important to ex, to destroy the rendered elements
-    wrapper.destroy()
   })
 
   test('context', () => {
@@ -56,7 +61,7 @@ describe('mount examples', () => {
       localVue
     })
 
-    // const wrapper = mount(TestComponent) - It won't work!
+    // const wrapper = mount(TestComponent) // It won't work!
 
     expect(wrapper.vm).toBeInstanceOf(localVue)
   })
@@ -101,18 +106,18 @@ describe('mount examples', () => {
     }
 
     const TestComponent = {
-      // not using template literals just for this example
+      template:
+        '<section>' +
+        '<slot name="title" v-bind:title="defaultTitle" />' +
+        '<slot />' +
+        '<slot name="footer" />' +
+        '</section>'
+      ,
       data: function () {
         return {
           defaultTitle: "EmpathyX"
         }
-      },
-      template:
-        '<section>' +
-          '<slot name="title" v-bind:title="defaultTitle" />' +
-          '<slot />' +
-          '<slot name="footer" />' +
-        '</section>'
+      }
     }
 
     test("default slot and named slots", () => {
@@ -143,7 +148,6 @@ describe('mount examples', () => {
 
   describe('stubs', () => {
     const ChildComponent = {
-      name: "ChildComponent",
       template: '<span>child</span>'
     }
 
@@ -158,7 +162,7 @@ describe('mount examples', () => {
       expect(wrapper.text()).toBe('parent: child')
     })
 
-    test('stub child', () => {
+    test('stub child I', () => {
       const ParentComponent = {
         template: '<div>parent: <ChildComponent /></div>'
       }
@@ -172,9 +176,9 @@ describe('mount examples', () => {
       expect(wrapper.text()).toBe('parent: child')
     })
 
-    test('stub child', () => {
+    test('stub child II', () => {
       const ParentComponent = {
-        template: '<div>parent: <CustomChild ref="child"/></div>'
+        template: '<div>parent: <CustomChild /></div>'
       }
 
       const wrapper = mount(ParentComponent, {
@@ -199,10 +203,12 @@ describe('mount examples', () => {
 
       expect(wrapper.findComponent({ ref: 'child'}).exists()).toBe(true)
       expect(wrapper.text()).toBe('parent:');
+      expect(wrapper.vm.$el.outerHTML).toBe('<div>parent: <childcomponent-stub></childcomponent-stub></div>')
     })
 
     test('shallowMount', () => {
       const ParentComponent = {
+        components: { ChildComponent },
         template: '<div>parent: <ChildComponent ref="child" /></div>'
       }
 

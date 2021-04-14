@@ -2,6 +2,7 @@
   <div id='app'>
     Dropdown
     <div class="x-options">{{ options.join() }}</div>
+    <div class="x-status">{{ status }}</div>
     <Dropdown
       :options="options"
       v-model="selected"
@@ -20,6 +21,7 @@ import axios, { AxiosResponse } from 'axios'
 export default class App extends Vue {
   options: string[] = []
   selected: string | null = null;
+  status = 'off';
 
   mounted (): void {
     /*
@@ -32,6 +34,10 @@ export default class App extends Vue {
       .then(({ data: options }: AxiosResponse) => {
         this.options = options
       })
+
+    setTimeout(() => {
+      this.status = 'on'
+    }, 500)
   }
 }
 </script>

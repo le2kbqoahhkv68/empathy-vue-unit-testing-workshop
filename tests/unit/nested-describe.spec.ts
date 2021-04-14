@@ -8,7 +8,6 @@ describe('outer', () => {
     })
     test('test 1', () => {
       console.log('test for describe inner 1');
-      const a = 'hello';
       expect(true).toEqual(true)
     })
   })

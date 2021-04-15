@@ -9,7 +9,7 @@ describe('Dropdown component tests', () => {
   }: {
     options?: string[],
     selected?: string
-  }): {
+  } = {}): {
     wrapper: Wrapper<Vue>,
     selectedWrapper: Wrapper<Vue>,
     getOptions: () => string[],
@@ -22,6 +22,7 @@ describe('Dropdown component tests', () => {
       }
     })
 
+    // DONT DO THIS SELECTED WRAPPER UNTIL THE END OF THE TESTS!!!!!!!!
     const selectedWrapper = wrapper.find('.x-dropdown__selected');
 
     return {
@@ -69,9 +70,12 @@ describe('Dropdown component tests', () => {
     })
 
     // we're not checking that the prop.options is ['a', 'b', 'c']!
+    // data-test="item" with debug
+    // const itemsWrapper = wrapper.findAll('[data-test="item"]')
     const itemsWrapper = wrapper.findAll('.x-dropdown__item');
 
     optionsStub.forEach((option, optionIdx) =>  {
+      // its an array!
       expect(itemsWrapper.at(optionIdx).text()).toBe(option);
     })
 
@@ -101,7 +105,7 @@ describe('Dropdown component tests', () => {
       }
     })*/
 
-    const { wrapper, clickItem } = createDropdownWrapper({ options: optionsStub })
+    const { wrapper, clickItem } = createDropdownWrapper()
 
     const optionIdx = 1;
     const itemWrapper = wrapper.findAll('.x-dropdown__item').at(optionIdx);
@@ -109,7 +113,7 @@ describe('Dropdown component tests', () => {
 
     //itemWrapper.trigger('click');
     await clickItem(1);
-    // notice the array and notice equal
+    // do with toBe, notice the array and notice equal
     expect(wrapper.emitted('select')?.[0]).toEqual([optionsStub[optionIdx]]);
   })
 

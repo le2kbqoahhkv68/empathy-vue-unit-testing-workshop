@@ -59,7 +59,7 @@ describe('App tests', () => {
   test('fakeTimers', async () => {
     const wrapper = mount(App);
 
-    jest.advanceTimersByTime(499);
+    jest.advanceTimersByTime(500);
     //jest.advanceTimersByTime(500);
 
     await wrapper.vm.$nextTick();

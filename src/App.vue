@@ -35,6 +35,7 @@ export default class App extends Vue {
         this.options = options
       })
 
+
     setTimeout(() => {
       this.status = 'on'
     }, 500)

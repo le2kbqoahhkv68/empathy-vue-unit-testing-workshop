@@ -6,7 +6,7 @@ jest.useFakeTimers();
 
 describe('App tests', () => {
 
-  test('mocking $http', async () => {
+/*  test('mocking $http', async () => {
     const optionsStub = ['x', 'y', 'z']
 
     const mockHttp = {
@@ -25,7 +25,7 @@ describe('App tests', () => {
 
     await wrapper.vm.$nextTick()
     expect(wrapper.find('.x-options').text()).toBe(optionsStub.join());
-  })
+  })*/
 
   test('mocking with jest fn', async () => {
     const optionsStub = ['x', 'y', 'z']
@@ -54,16 +54,12 @@ describe('App tests', () => {
     expect(axios.get).toHaveBeenCalled();
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith('http://localhost:3001/options');
-  })
 
-  test('fakeTimers', async () => {
-    const wrapper = mount(App);
-
-    jest.advanceTimersByTime(499);
-    //jest.advanceTimersByTime(500);
+    jest.advanceTimersByTime(500);
 
     await wrapper.vm.$nextTick();
 
     expect(wrapper.find('.x-status').text()).toBe('on');
   })
+
 })

@@ -1,5 +1,7 @@
 # vue-unit-testing-workshop
 
+Youtube presentation: https://www.youtube.com/watch?v=I7OE0NgzeW4
+
 ## Project setup
 ```
 npm install
